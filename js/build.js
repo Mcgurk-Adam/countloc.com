@@ -14,6 +14,16 @@ window.addEventListener("reponotfound", function () {
     errorContainer.innerText = "That repository cannot be found.";
     countButton.removeAttribute("aria-busy");
 }, false);
+window.addEventListener("repofound", function (ev) {
+    var repoUrl = ev.detail;
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "http://localhost:5200/api/v1/count/?repo_url=" + repoUrl);
+    ajax.setRequestHeader("Content-Type", "application/json");
+    ajax.send();
+    ajax.onload = function () {
+        console.log(ajax);
+    };
+}, false);
 var GitHub = (function () {
     function GitHub() {
     }
@@ -38,7 +48,10 @@ var GitHub = (function () {
             }
             else {
                 var githubResponse = JSON.parse(ajax.response);
-                console.log(githubResponse);
+                var foundEvent = new CustomEvent("repofound", {
+                    detail: "https://github.com/" + githubResponse.full_name
+                });
+                window.dispatchEvent(foundEvent);
             }
         };
     };
