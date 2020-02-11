@@ -19,6 +19,24 @@
 
 	</header>
 
+	<section class="bodycopy">
+		
+		<h1>Count Lines of Code!</h1>
+		<p>Enter the URL to your public GitHub repository to see how many lines of code it is!</p>
+
+	</section>
+
+	<form>
+		
+		<label for="repoUrl">
+			GitHub URL
+			<input type="url" id="repoUrl" placeholder="https://github.com/McGurk-Adam/countloc.com" pattern="^https://github.com/" required>
+		</label>
+
+		<button type="submit" id="countButton" title="Count the lines of code in your repository!">Count!</button>
+
+	</form>
+
 <script src="/js/build.js"></script>
 
 </body>
