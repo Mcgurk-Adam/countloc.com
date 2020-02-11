@@ -6,6 +6,7 @@
 	<title>Count LOC</title>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 	<link href="/style/style.css" rel="stylesheet">
+	<link rel="icon" type="image/png" href="/favicon.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
@@ -28,9 +29,11 @@
 	</section>
 
 	<form>
+
+		<p id="formError"></p>
 		
 		<label for="repoUrl">GitHub URL
-			<input type="url" id="repoUrl" placeholder="https://github.com/McGurk-Adam/countloc.com" pattern="^https://github.com/" required>
+			<input type="url" id="repoUrl" placeholder="https://github.com/McGurk-Adam/countloc.com" title="Must be a full URL to a GitHub repository" pattern="^https:\/\/github\.com\/" required>
 		</label>
 
 		<button type="submit" id="countButton" class="main-red" title="Count the lines of code in your repository!">Count!</button>

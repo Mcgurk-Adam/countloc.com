@@ -21,10 +21,54 @@ form {
 		margin-bottom: 20px;
 
 		input:not([type=checkbox]):not([type=radio]), select {
+			
 			width: 100%;
 			background-color: #fff;
 			margin-top: 5px;
 			text-indent: 15px;
+			font-size: 12px;
+			color: $secondary_text;
+
+			&::placeholder {
+				font-size: 12px;
+				color: #BCCCDC;
+			}
+
+			&::-webkit-input-placeholder {
+				font-size: 12px;
+				color: #BCCCDC;
+			}
+
+			&::-moz-placeholder {
+				font-size: 12px;
+				color: #BCCCDC;
+			}
+
+			&::-ms-input-placeholder {
+				font-size: 12px;
+				color: #BCCCDC;
+			}
+
+			&:focus {
+
+				&::placeholder {
+					color: transparent;
+				}
+
+				&::-webkit-input-placeholder {
+					color: transparent;
+				}
+
+				&::-moz-placeholder {
+					color: transparent;
+				}
+
+				&::-ms-input-placeholder {
+					color: transparent;
+				}
+
+			}
+
 		}
 
 	}
@@ -46,6 +90,8 @@ form {
 		&[aria-busy] {
 			color: transparent;
 			background-size: 40px;
+			pointer-events: none;
+			cursor: not-allowed;
 		}
 
 	}

@@ -5,6 +5,7 @@
         "outFile": "../js/build.js"
     },
     "files": [
+    	"mainform.ts",
     	"index.ts"
     ]
 }
