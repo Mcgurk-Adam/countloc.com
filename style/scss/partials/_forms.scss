@@ -4,6 +4,17 @@ form {
 	flex-flow: column nowrap;
 	align-items: center;
 
+	#formError {
+		color: #D64545;
+		margin-bottom: 30px;
+		font-size: 14px;
+
+		&:empty {
+			display: none;
+		}
+
+	}
+
 	label, button {
 		max-width: 400px;
 		width: 95%;

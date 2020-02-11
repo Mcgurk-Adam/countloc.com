@@ -1,11 +1,26 @@
 const form = document.querySelector("form") as HTMLFormElement;
 const countButton = document.getElementById("countButton") as HTMLButtonElement;
+const repoUrl = document.getElementById("repoUrl") as HTMLInputElement;
 const errorContainer = document.getElementById("formError") as HTMLParagraphElement;
+
+repoUrl.addEventListener("input", () => {
+
+	errorContainer.innerHTML = "";
+
+}, false);
 
 form.addEventListener("submit", (ev:Event) => {
 
 	ev.preventDefault();
-
 	countButton.setAttribute("aria-busy", "true");
+
+	GitHub.validateRepo(repoUrl.value);
+
+}, false);
+
+window.addEventListener("reponotfound", () => {
+
+	errorContainer.innerText = "That repository cannot be found.";
+	countButton.removeAttribute("aria-busy");
 
 }, false);

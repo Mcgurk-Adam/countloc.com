@@ -6,6 +6,7 @@
     },
     "files": [
     	"mainform.ts",
+    	"GitHub.ts",
     	"index.ts"
     ]
 }
