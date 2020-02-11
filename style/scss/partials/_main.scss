@@ -1,9 +1,43 @@
 .bodycopy {
-	margin: 50px;
+	margin: 50px 0;
 	text-align: center;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+
+	h1, p {
+		max-width: 95%;
+	}
 
 	h1 {
 		margin-bottom: 20px;
+		color: $dark_text;
+		font-size: 36px;
+		line-height: 1.2;
+	}
+
+	p {
+		color: $secondary_text;
+		font-size: 18px;
+		line-height: 1.5;
+	}
+
+}
+
+@media all and (max-width: 500px) {
+
+	.bodycopy {
+
+		margin: 30px 0;
+
+		h1 {
+			font-size: 28px;
+		}
+
+		p {
+			font-size: 14px;
+		}
+
 	}
 
 }

@@ -24,7 +24,16 @@ a {
 	text-decoration: none;
 }
 
+a, button {
+	cursor: pointer;
+}
+
 img {
 	max-width: 100%;
 	height: auto;
 }
+
+$dark_text: #102A43;
+$secondary_text: #243B53;
+$main_red: #8D2B0B;
+$border-radius: 4px;
