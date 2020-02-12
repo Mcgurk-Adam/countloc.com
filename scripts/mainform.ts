@@ -2,6 +2,9 @@ const form = document.querySelector("form") as HTMLFormElement;
 const countButton = document.getElementById("countButton") as HTMLButtonElement;
 const repoUrl = document.getElementById("repoUrl") as HTMLInputElement;
 const errorContainer = document.getElementById("formError") as HTMLParagraphElement;
+const bodyCopy = document.querySelector(".bodycopy") as HTMLElement;
+const redoButton = document.getElementById("redoButton") as HTMLButtonElement;
+
 
 repoUrl.addEventListener("input", () => {
 
@@ -34,9 +37,33 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 	ajax.send();
 	ajax.onload = () => {
 
-		console.log(ajax);
+		countButton.removeAttribute("aria-busy");
+
+		const jsonReturn = JSON.parse(ajax.response);
+
+		if (jsonReturn.success) {
+			bodyCopy.setAttribute("aria-hidden", "true");
+			form.setAttribute("aria-hidden", "true");
+
+			document.getElementById("repoName").innerText = jsonReturn.data.repo_name;
+			document.getElementById("numberOfLines").innerText = jsonReturn.data.total;
+
+			document.querySelector(".countlines").classList.add("loaded");
+		}
 
 	};
 
+
+}, false);
+
+redoButton.addEventListener("click", () => {
+
+	document.getElementById("repoName").innerText = "";
+	document.getElementById("numberOfLines").innerText = "";
+	repoUrl.value = "";
+	
+	form.removeAttribute("aria-hidden");
+	bodyCopy.removeAttribute("aria-hidden");
+	document.querySelector(".countlines").classList.remove("loaded");
 
 }, false);

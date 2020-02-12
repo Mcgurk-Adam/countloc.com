@@ -4,6 +4,10 @@ form {
 	flex-flow: column nowrap;
 	align-items: center;
 
+	&[aria-hidden] {
+		display: none;
+	}
+
 	#formError {
 		color: #D64545;
 		margin-bottom: 30px;

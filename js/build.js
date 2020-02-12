@@ -2,6 +2,8 @@ var form = document.querySelector("form");
 var countButton = document.getElementById("countButton");
 var repoUrl = document.getElementById("repoUrl");
 var errorContainer = document.getElementById("formError");
+var bodyCopy = document.querySelector(".bodycopy");
+var redoButton = document.getElementById("redoButton");
 repoUrl.addEventListener("input", function () {
     errorContainer.innerHTML = "";
 }, false);
@@ -21,8 +23,24 @@ window.addEventListener("repofound", function (ev) {
     ajax.setRequestHeader("Content-Type", "application/json");
     ajax.send();
     ajax.onload = function () {
-        console.log(ajax);
+        countButton.removeAttribute("aria-busy");
+        var jsonReturn = JSON.parse(ajax.response);
+        if (jsonReturn.success) {
+            bodyCopy.setAttribute("aria-hidden", "true");
+            form.setAttribute("aria-hidden", "true");
+            document.getElementById("repoName").innerText = jsonReturn.data.repo_name;
+            document.getElementById("numberOfLines").innerText = jsonReturn.data.total;
+            document.querySelector(".countlines").classList.add("loaded");
+        }
     };
+}, false);
+redoButton.addEventListener("click", function () {
+    document.getElementById("repoName").innerText = "";
+    document.getElementById("numberOfLines").innerText = "";
+    repoUrl.value = "";
+    form.removeAttribute("aria-hidden");
+    bodyCopy.removeAttribute("aria-hidden");
+    document.querySelector(".countlines").classList.remove("loaded");
 }, false);
 var GitHub = (function () {
     function GitHub() {

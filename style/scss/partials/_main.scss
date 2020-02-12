@@ -5,6 +5,10 @@
 	flex-flow: column nowrap;
 	align-items: center;
 
+	&[aria-hidden] {
+		display: none;
+	}
+
 	h1, p {
 		max-width: 95%;
 	}
@@ -20,6 +24,55 @@
 		color: $secondary_text;
 		font-size: 18px;
 		line-height: 1.5;
+	}
+
+}
+
+.countlines {
+
+	display: none;
+	flex-flow: column nowrap;
+	align-items: center;
+	margin-top: 50px;
+
+	&.loaded {
+		display: flex;
+	}
+
+	h2, h3, p {
+		text-align: center;
+		max-width: 95%;
+	}
+
+	h3 {
+
+		color: $secondary_text;
+		font-size: 36px;
+
+		span {
+			color: inherit;
+			font-size: inherit;
+		}
+
+	}
+
+	h2 {
+		font-size: 60px;
+		color: $dark_text;
+		margin: 20px 0;
+	}
+
+	p {
+		font-size: 24px;
+		color: $secondary_text;
+		margin-bottom: 20px;
+	}
+
+	button#redoButton {
+		background-color: transparent;
+		font-size: 18px;
+		color: $secondary_text;
+		text-decoration: underline;
 	}
 
 }
