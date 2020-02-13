@@ -20,7 +20,6 @@ window.addEventListener("repofound", function (ev) {
     var repoUrl = ev.detail;
     var ajax = new XMLHttpRequest();
     ajax.open("GET", "https://clocapi.mcgurk.app/api/v1/count/?repo_url=" + repoUrl);
-    ajax.setRequestHeader("Content-Type", "application/json");
     ajax.send();
     ajax.onload = function () {
         countButton.removeAttribute("aria-busy");
