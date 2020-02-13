@@ -69,6 +69,32 @@
 		margin-bottom: 20px;
 	}
 
+	#languageBreakdown {
+		max-width: 320px;
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+		justify-content: space-between;
+
+		.language {
+
+			width: 45%;
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+			margin-bottom: 20px;
+			cursor: pointer;
+
+			input[type=checkbox] {
+
+				margin-right: 20px;
+
+			}
+
+		}
+
+	}
+
 	button#redoButton {
 		background-color: transparent;
 		font-size: 18px;

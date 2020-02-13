@@ -25,11 +25,36 @@ window.addEventListener("repofound", function (ev) {
         countButton.removeAttribute("aria-busy");
         var jsonReturn = JSON.parse(ajax.response);
         if (jsonReturn.success) {
+            console.log(jsonReturn);
             ga("send", "event", "code", "counted", "Counted Code", jsonReturn.data.raw_total);
             bodyCopy.setAttribute("aria-hidden", "true");
             form.setAttribute("aria-hidden", "true");
             document.getElementById("repoName").innerText = jsonReturn.data.repo_name;
             document.getElementById("numberOfLines").innerText = jsonReturn.data.total;
+            var languageBreakdownContainer_1 = document.getElementById("languageBreakdown");
+            jsonReturn.data.language_breakdown.forEach(function (language) {
+                var languageLabel = document.createElement("label");
+                languageLabel.classList.add("language");
+                languageLabel.innerText = language.language + " (" + language.loc + ")";
+                var languageCheckbox = document.createElement("input");
+                languageCheckbox.setAttribute("type", "checkbox");
+                languageCheckbox.setAttribute("checked", "true");
+                languageCheckbox.setAttribute("data-total", language.loc);
+                languageCheckbox.onchange = function () {
+                    var totalNumberContainer = document.getElementById("numberOfLines");
+                    var currentNumber = parseInt(totalNumberContainer.innerText.replace(/\D/g, ''));
+                    var newNumber;
+                    if (this.checked) {
+                        newNumber = currentNumber + parseInt(this.getAttribute("data-total"));
+                    }
+                    else {
+                        newNumber = currentNumber - parseInt(this.getAttribute("data-total"));
+                    }
+                    totalNumberContainer.innerText = newNumber.toString();
+                };
+                languageLabel.insertAdjacentElement("afterbegin", languageCheckbox);
+                languageBreakdownContainer_1.appendChild(languageLabel);
+            });
             document.querySelector(".countlines").classList.add("loaded");
         }
     };
@@ -37,6 +62,7 @@ window.addEventListener("repofound", function (ev) {
 redoButton.addEventListener("click", function () {
     document.getElementById("repoName").innerText = "";
     document.getElementById("numberOfLines").innerText = "";
+    document.getElementById("languageBreakdown").innerHTML = "";
     repoUrl.value = "";
     form.removeAttribute("aria-hidden");
     bodyCopy.removeAttribute("aria-hidden");

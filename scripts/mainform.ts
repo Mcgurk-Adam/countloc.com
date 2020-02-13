@@ -42,6 +42,8 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 
 		if (jsonReturn.success) {
 
+			console.log(jsonReturn);
+
 			ga("send", "event", "code", "counted", "Counted Code", jsonReturn.data.raw_total);
 
 			bodyCopy.setAttribute("aria-hidden", "true");
@@ -50,7 +52,42 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 			document.getElementById("repoName").innerText = jsonReturn.data.repo_name;
 			document.getElementById("numberOfLines").innerText = jsonReturn.data.total;
 
+			const languageBreakdownContainer = document.getElementById("languageBreakdown") as HTMLDivElement;
+
+			jsonReturn.data.language_breakdown.forEach((language) => {
+
+				const languageLabel = document.createElement("label") as HTMLLabelElement;
+				languageLabel.classList.add("language");
+				languageLabel.innerText = `${language.language} (${language.loc})`;
+				const languageCheckbox = document.createElement("input");
+				languageCheckbox.setAttribute("type", "checkbox");
+				languageCheckbox.setAttribute("checked", "true");
+				languageCheckbox.setAttribute("data-total", language.loc);
+				languageCheckbox.onchange = function() {
+
+					const totalNumberContainer = document.getElementById("numberOfLines");
+
+					const currentNumber:number = parseInt(totalNumberContainer.innerText.replace(/\D/g,''));
+
+					let newNumber:number;
+
+					if (this.checked) {
+						newNumber = currentNumber + parseInt(this.getAttribute("data-total"));
+					} else {
+						newNumber = currentNumber - parseInt(this.getAttribute("data-total"));
+					}
+
+					totalNumberContainer.innerText = newNumber.toString();
+
+				};
+				languageLabel.insertAdjacentElement("afterbegin", languageCheckbox);
+
+				languageBreakdownContainer.appendChild(languageLabel);
+
+			});
+
 			document.querySelector(".countlines").classList.add("loaded");
+
 		}
 
 	};
@@ -62,6 +99,7 @@ redoButton.addEventListener("click", () => {
 
 	document.getElementById("repoName").innerText = "";
 	document.getElementById("numberOfLines").innerText = "";
+	document.getElementById("languageBreakdown").innerHTML = "";
 	repoUrl.value = "";
 	
 	form.removeAttribute("aria-hidden");
