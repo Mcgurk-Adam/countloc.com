@@ -25,13 +25,7 @@ window.addEventListener("repofound", function (ev) {
         countButton.removeAttribute("aria-busy");
         var jsonReturn = JSON.parse(ajax.response);
         if (jsonReturn.success) {
-            ga("send", {
-                hitType: "event",
-                eventCategory: "code",
-                eventAction: "counted",
-                eventLabel: "Counted Code",
-                eventValue: jsonReturn.data.raw_total
-            });
+            ga("send", "event", "code", "counted", "Counted Code", jsonReturn.data.raw_total);
             bodyCopy.setAttribute("aria-hidden", "true");
             form.setAttribute("aria-hidden", "true");
             document.getElementById("repoName").innerText = jsonReturn.data.repo_name;

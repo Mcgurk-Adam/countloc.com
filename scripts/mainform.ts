@@ -42,14 +42,8 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 
 		if (jsonReturn.success) {
 
-			ga("send", {
-				hitType: "event",
-				eventCategory: "code",
-				eventAction: "counted",
-				eventLabel: "Counted Code",
-				eventValue: jsonReturn.data.raw_total
-			});
-		
+			ga("send", "event", "code", "counted", "Counted Code", jsonReturn.data.raw_total);
+
 			bodyCopy.setAttribute("aria-hidden", "true");
 			form.setAttribute("aria-hidden", "true");
 
