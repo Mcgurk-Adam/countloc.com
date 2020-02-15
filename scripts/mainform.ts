@@ -50,7 +50,7 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 	const repoUrl:string = ev.detail;
 	const countPackageValue:string = countPackagesCheckbox.checked ? "1" : "0";
 	const ajax:XMLHttpRequest = new XMLHttpRequest();
-	ajax.open("GET", "http://localhost:5200/api/v1/count/?repo_url=" + repoUrl + "&count_packages="+countPackageValue);
+	ajax.open("GET", "https://cloc.mcgurk.app/api/v1/count/?repo_url=" + repoUrl + "&count_packages="+countPackageValue);
 	ajax.send();
 	ajax.onload = () => {
 
@@ -60,7 +60,7 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 
 		if (jsonReturn.success) {
 
-			console.log(jsonReturn);
+			sessionStorage.setItem("latestCheck", JSON.stringify(jsonReturn.data));
 
 			ga("send", "event", "code", "counted", "Counted Code", jsonReturn.data.raw_total);
 

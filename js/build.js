@@ -31,13 +31,13 @@ window.addEventListener("repofound", function (ev) {
     var repoUrl = ev.detail;
     var countPackageValue = countPackagesCheckbox.checked ? "1" : "0";
     var ajax = new XMLHttpRequest();
-    ajax.open("GET", "http://localhost:5200/api/v1/count/?repo_url=" + repoUrl + "&count_packages=" + countPackageValue);
+    ajax.open("GET", "https://cloc.mcgurk.app/api/v1/count/?repo_url=" + repoUrl + "&count_packages=" + countPackageValue);
     ajax.send();
     ajax.onload = function () {
         countButton.removeAttribute("aria-busy");
         var jsonReturn = JSON.parse(ajax.response);
         if (jsonReturn.success) {
-            console.log(jsonReturn);
+            sessionStorage.setItem("latestCheck", JSON.stringify(jsonReturn.data));
             ga("send", "event", "code", "counted", "Counted Code", jsonReturn.data.raw_total);
             bodyCopy.setAttribute("aria-hidden", "true");
             form.setAttribute("aria-hidden", "true");
