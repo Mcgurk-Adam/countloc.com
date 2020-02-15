@@ -31,7 +31,7 @@ window.addEventListener("repofound", function (ev) {
     var repoUrl = ev.detail;
     var countPackageValue = countPackagesCheckbox.checked ? "1" : "0";
     var ajax = new XMLHttpRequest();
-    ajax.open("GET", "https://cloc.mcgurk.app/api/v1/count/?repo_url=" + repoUrl + "&count_packages=" + countPackageValue);
+    ajax.open("GET", "https://clocapi.mcgurk.app/api/v1/count/?repo_url=" + repoUrl + "&count_packages=" + countPackageValue);
     ajax.send();
     ajax.onload = function () {
         countButton.removeAttribute("aria-busy");

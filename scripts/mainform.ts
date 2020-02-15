@@ -50,7 +50,7 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 	const repoUrl:string = ev.detail;
 	const countPackageValue:string = countPackagesCheckbox.checked ? "1" : "0";
 	const ajax:XMLHttpRequest = new XMLHttpRequest();
-	ajax.open("GET", "https://cloc.mcgurk.app/api/v1/count/?repo_url=" + repoUrl + "&count_packages="+countPackageValue);
+	ajax.open("GET", "https://clocapi.mcgurk.app/api/v1/count/?repo_url=" + repoUrl + "&count_packages="+countPackageValue);
 	ajax.send();
 	ajax.onload = () => {
 
