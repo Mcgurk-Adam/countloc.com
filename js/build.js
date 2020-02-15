@@ -4,6 +4,17 @@ var repoUrl = document.getElementById("repoUrl");
 var errorContainer = document.getElementById("formError");
 var bodyCopy = document.querySelector(".bodycopy");
 var redoButton = document.getElementById("redoButton");
+var countPackagesCheckbox = document.getElementById("countPackages");
+window.addEventListener("load", function () {
+    var countPackagesStorage = localStorage.getItem("countPackages");
+    if (countPackagesStorage == "1") {
+        countPackagesCheckbox.checked = true;
+    }
+}, false);
+countPackagesCheckbox.addEventListener("change", function () {
+    var storageValue = countPackagesCheckbox.checked ? "1" : "0";
+    localStorage.setItem("countPackages", storageValue);
+}, false);
 repoUrl.addEventListener("input", function () {
     errorContainer.innerHTML = "";
 }, false);
@@ -18,8 +29,9 @@ window.addEventListener("reponotfound", function () {
 }, false);
 window.addEventListener("repofound", function (ev) {
     var repoUrl = ev.detail;
+    var countPackageValue = countPackagesCheckbox.checked ? "1" : "0";
     var ajax = new XMLHttpRequest();
-    ajax.open("GET", "https://clocapi.mcgurk.app/api/v1/count/?repo_url=" + repoUrl);
+    ajax.open("GET", "http://localhost:5200/api/v1/count/?repo_url=" + repoUrl + "&count_packages=" + countPackageValue);
     ajax.send();
     ajax.onload = function () {
         countButton.removeAttribute("aria-busy");

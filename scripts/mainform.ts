@@ -4,7 +4,24 @@ const repoUrl = document.getElementById("repoUrl") as HTMLInputElement;
 const errorContainer = document.getElementById("formError") as HTMLParagraphElement;
 const bodyCopy = document.querySelector(".bodycopy") as HTMLElement;
 const redoButton = document.getElementById("redoButton") as HTMLButtonElement;
+const countPackagesCheckbox = document.getElementById("countPackages");
 
+window.addEventListener("load", () => {
+
+	const countPackagesStorage:string = localStorage.getItem("countPackages");
+
+	if (countPackagesStorage == "1") {
+		countPackagesCheckbox.checked = true;
+	}
+
+}, false);
+
+countPackagesCheckbox.addEventListener("change", () => {
+
+	const storageValue:string = countPackagesCheckbox.checked ? "1" : "0";
+	localStorage.setItem("countPackages", storageValue);
+
+}, false);
 
 repoUrl.addEventListener("input", () => {
 
@@ -31,8 +48,9 @@ window.addEventListener("reponotfound", () => {
 window.addEventListener("repofound", (ev:CustomEvent) => {
 
 	const repoUrl:string = ev.detail;
+	const countPackageValue:string = countPackagesCheckbox.checked ? "1" : "0";
 	const ajax:XMLHttpRequest = new XMLHttpRequest();
-	ajax.open("GET", "https://clocapi.mcgurk.app/api/v1/count/?repo_url=" + repoUrl);
+	ajax.open("GET", "http://localhost:5200/api/v1/count/?repo_url=" + repoUrl + "&count_packages="+countPackageValue);
 	ajax.send();
 	ajax.onload = () => {
 
