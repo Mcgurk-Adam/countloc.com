@@ -62,7 +62,11 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 
 			sessionStorage.setItem("latestCheck", JSON.stringify(jsonReturn.data));
 
-			ga("send", "event", "code", "counted", "Counted Code", jsonReturn.data.raw_total);
+			gtag('event', 'counted', {
+			    'event_category': 'code',
+			    'event_label': 'Counted Code',
+			    'value': jsonReturn.data.raw_total
+			});
 
 			bodyCopy.setAttribute("aria-hidden", "true");
 			form.setAttribute("aria-hidden", "true");
