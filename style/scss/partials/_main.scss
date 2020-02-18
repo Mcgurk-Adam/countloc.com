@@ -104,6 +104,19 @@
 
 }
 
+.notfound {
+	width: 100%;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	flex-flow: column nowrap;
+
+	p {
+		margin-bottom: 10px;
+	}
+
+}
+
 @media all and (max-width: 500px) {
 
 	.bodycopy {

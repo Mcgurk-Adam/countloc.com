@@ -5,6 +5,7 @@ const errorContainer = document.getElementById("formError") as HTMLParagraphElem
 const bodyCopy = document.querySelector(".bodycopy") as HTMLElement;
 const redoButton = document.getElementById("redoButton") as HTMLButtonElement;
 const countPackagesCheckbox = document.getElementById("countPackages");
+const notFound = document.querySelector(".notfound");
 
 window.addEventListener("load", () => {
 
@@ -42,6 +43,9 @@ window.addEventListener("reponotfound", () => {
 
 	errorContainer.innerText = "That repository cannot be found.";
 	countButton.removeAttribute("aria-busy");
+	form.style.display = "none";
+	bodyCopy.style.display = "none";
+	notFound.style.display = "flex";
 
 }, false);
 

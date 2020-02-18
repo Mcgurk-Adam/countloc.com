@@ -5,6 +5,7 @@ var errorContainer = document.getElementById("formError");
 var bodyCopy = document.querySelector(".bodycopy");
 var redoButton = document.getElementById("redoButton");
 var countPackagesCheckbox = document.getElementById("countPackages");
+var notFound = document.querySelector(".notfound");
 window.addEventListener("load", function () {
     var countPackagesStorage = localStorage.getItem("countPackages");
     if (countPackagesStorage == "1") {
@@ -26,6 +27,9 @@ form.addEventListener("submit", function (ev) {
 window.addEventListener("reponotfound", function () {
     errorContainer.innerText = "That repository cannot be found.";
     countButton.removeAttribute("aria-busy");
+    form.style.display = "none";
+    bodyCopy.style.display = "none";
+    notFound.style.display = "flex";
 }, false);
 window.addEventListener("repofound", function (ev) {
     var repoUrl = ev.detail;
