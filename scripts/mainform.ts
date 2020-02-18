@@ -98,9 +98,9 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 					let newNumber:number;
 
 					if (this.checked) {
-						newNumber = currentNumber + parseInt(this.getAttribute("data-total"));
+						newNumber = currentNumber + parseInt(this.getAttribute("data-total").replace(/\D/g,''));
 					} else {
-						newNumber = currentNumber - parseInt(this.getAttribute("data-total"));
+						newNumber = currentNumber - parseInt(this.getAttribute("data-total").replace(/\D/g,''));
 					}
 
 					totalNumberContainer.innerText = newNumber.toString();

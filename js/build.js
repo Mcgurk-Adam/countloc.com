@@ -65,10 +65,10 @@ window.addEventListener("repofound", function (ev) {
                     var currentNumber = parseInt(totalNumberContainer.innerText.replace(/\D/g, ''));
                     var newNumber;
                     if (this.checked) {
-                        newNumber = currentNumber + parseInt(this.getAttribute("data-total"));
+                        newNumber = currentNumber + parseInt(this.getAttribute("data-total").replace(/\D/g, ''));
                     }
                     else {
-                        newNumber = currentNumber - parseInt(this.getAttribute("data-total"));
+                        newNumber = currentNumber - parseInt(this.getAttribute("data-total").replace(/\D/g, ''));
                     }
                     totalNumberContainer.innerText = newNumber.toString();
                 };
