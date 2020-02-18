@@ -70,7 +70,7 @@ window.addEventListener("repofound", function (ev) {
                     else {
                         newNumber = currentNumber - parseInt(this.getAttribute("data-total").replace(/\D/g, ''));
                     }
-                    totalNumberContainer.innerText = newNumber.toString();
+                    totalNumberContainer.innerText = newNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 };
                 languageLabel.insertAdjacentElement("afterbegin", languageCheckbox);
                 languageBreakdownContainer_1.appendChild(languageLabel);
