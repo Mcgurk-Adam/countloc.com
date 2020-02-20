@@ -33,7 +33,13 @@ img {
 	height: auto;
 }
 
+[aria-hidden] {
+	display: none !important;
+}
+
 $dark_text: #102A43;
 $secondary_text: #243B53;
+$main_background: #F0F4F8;
 $main_red: #8D2B0B;
+$main_blue: #003E6B;
 $border-radius: 4px;

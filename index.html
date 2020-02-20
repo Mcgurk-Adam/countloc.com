@@ -40,7 +40,7 @@
 
 	</section>
 
-	<form>
+	<form id="mainRepoForm">
 
 		<p id="formError"></p>
 		
@@ -62,7 +62,12 @@
 		<h3><span id="repoName"></span> has:</h3>
 		<h2 id="numberOfLines"></h2>
 		<p>Lines of Code!</p>
-		<div id="languageBreakdown"></div>
+
+		<div id="totalCheckboxContainer">
+			<label id="totalSelectorLabel">Select All?<input type="checkbox" id="allSelections" checked></label>
+			<div id="languageBreakdown"></div>
+
+		</div>
 
 		<button type="button" id="redoButton">Do it again!</button>
 
@@ -75,24 +80,28 @@
 
 	</section>
 
-	<div style="display: none;">
-		
-		<form name="Signup Form" netlify>
+	<div class="dark-background" aria-hidden>
 
-			<label>Name
-				<input type="text" name="name" placeholder="Adam">
-			</label>
-
-			<label>Email
-				<input type="email" name="email" placeholder="you@me.com">
-			</label>
+		<div class="signup-container">
 			
-			<input type="hidden" name="source" value="organic">
-			<input type="hidden" name="post" value="NULL">
+			<form name="Signup Form" netlify>
 
-			<button type="submit">Add Me!</button>
+				<label>Name
+					<input type="text" name="name" placeholder="Adam">
+				</label>
 
-		</form>
+				<label>Email
+					<input type="email" name="email" placeholder="you@me.com">
+				</label>
+				
+				<input type="hidden" name="source" value="organic">
+				<input type="hidden" name="post" value="NULL">
+
+				<button type="submit" class="main-blue">Add Me!</button>
+
+			</form>
+
+		</div>
 
 	</div>
 

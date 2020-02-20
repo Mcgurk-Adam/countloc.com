@@ -118,6 +118,24 @@
 
 }
 
+#totalCheckboxContainer {
+
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+
+	#totalSelectorLabel {
+		margin-bottom: 25px;
+		cursor: pointer;
+
+		input {
+			margin-left: 15px;
+		}
+
+	}
+
+}
+
 @media all and (max-width: 500px) {
 
 	.bodycopy {

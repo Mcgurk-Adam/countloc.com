@@ -1,4 +1,4 @@
-var form = document.querySelector("form");
+var form = document.querySelector("#mainRepoForm");
 var countButton = document.getElementById("countButton");
 var repoUrl = document.getElementById("repoUrl");
 var errorContainer = document.getElementById("formError");
@@ -6,9 +6,16 @@ var bodyCopy = document.querySelector(".bodycopy");
 var redoButton = document.getElementById("redoButton");
 var countPackagesCheckbox = document.getElementById("countPackages");
 var notFound = document.querySelector(".notfound");
+var signupFormBackground = document.querySelector(".dark-background");
+var selectAllCheckBox = document.getElementById("allSelections");
 countPackagesCheckbox.addEventListener("change", function () {
     var storageValue = countPackagesCheckbox.checked ? "1" : "0";
     localStorage.setItem("countPackages", storageValue);
+}, false);
+signupFormBackground.addEventListener("click", function (e) {
+    if (e.target == signupFormBackground) {
+        signupFormBackground.setAttribute("aria-hidden", "true");
+    }
 }, false);
 repoUrl.addEventListener("input", function () {
     errorContainer.innerHTML = "";
@@ -18,7 +25,7 @@ form.addEventListener("submit", function (ev) {
     countButton.setAttribute("aria-busy", "true");
     GitHub.validateRepo(repoUrl.value);
 }, false);
-window.addEventListener("load", function () {
+window.addEventListener("DOMContentLoaded", function () {
     var countPackagesStorage = localStorage.getItem("countPackages");
     if (countPackagesStorage == "1") {
         countPackagesCheckbox.checked = true;
@@ -27,7 +34,8 @@ window.addEventListener("load", function () {
     if (urlParams.get("repo") != null) {
         repoUrl.value = urlParams.get("repo");
         if (form.checkValidity()) {
-            form.submit();
+            form.requestSubmit();
+            window.history.replaceState({}, document.title, "/");
         }
     }
 }, false);
@@ -67,30 +75,52 @@ window.addEventListener("repofound", function (ev) {
                 languageCheckbox.setAttribute("type", "checkbox");
                 languageCheckbox.setAttribute("checked", "true");
                 languageCheckbox.setAttribute("data-total", language.loc);
-                languageCheckbox.onchange = function () {
-                    var totalNumberContainer = document.getElementById("numberOfLines");
-                    var currentNumber = parseInt(totalNumberContainer.innerText.replace(/\D/g, ''));
-                    var newNumber;
-                    if (this.checked) {
-                        newNumber = currentNumber + parseInt(this.getAttribute("data-total").replace(/\D/g, ''));
-                    }
-                    else {
-                        newNumber = currentNumber - parseInt(this.getAttribute("data-total").replace(/\D/g, ''));
-                    }
-                    totalNumberContainer.innerText = newNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                };
+                languageCheckbox.addEventListener("change", function () { return updateNumber(languageCheckbox); }, false);
                 languageLabel.insertAdjacentElement("afterbegin", languageCheckbox);
                 languageBreakdownContainer_1.appendChild(languageLabel);
             });
+            selectAllCheckBox.addEventListener("change", selectAll, false);
             document.querySelector(".countlines").classList.add("loaded");
         }
     };
 }, false);
+function updateNumber(checkbox) {
+    var totalNumberContainer = document.getElementById("numberOfLines");
+    var currentNumber = parseInt(totalNumberContainer.innerText.replace(/\D/g, ''));
+    var newNumber;
+    if (checkbox.checked) {
+        newNumber = currentNumber + parseInt(checkbox.getAttribute("data-total").replace(/\D/g, ''));
+    }
+    else {
+        newNumber = currentNumber - parseInt(checkbox.getAttribute("data-total").replace(/\D/g, ''));
+    }
+    if (newNumber < 0) {
+        newNumber = 0;
+    }
+    totalNumberContainer.innerText = newNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function selectAll() {
+    var _this = this;
+    var checkboxes = document.querySelectorAll("#languageBreakdown input[type=checkbox]");
+    if (this.checked) {
+        var checkedCheckboxes = document.querySelectorAll("#languageBreakdown input[type=checkbox]:checked");
+        checkedCheckboxes.forEach(function (box) {
+            box.checked = false;
+            updateNumber(box);
+        });
+    }
+    checkboxes.forEach(function (box) {
+        box.checked = _this.checked;
+        updateNumber(box);
+    });
+}
 redoButton.addEventListener("click", function () {
     document.getElementById("repoName").innerText = "";
     document.getElementById("numberOfLines").innerText = "";
     document.getElementById("languageBreakdown").innerHTML = "";
     repoUrl.value = "";
+    selectAllCheckBox.removeEventListener("change", selectAll);
+    selectAllCheckBox.checked = true;
     form.removeAttribute("aria-hidden");
     bodyCopy.removeAttribute("aria-hidden");
     document.querySelector(".countlines").classList.remove("loaded");

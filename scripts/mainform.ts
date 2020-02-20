@@ -1,4 +1,4 @@
-const form = document.querySelector("form") as HTMLFormElement;
+const form = document.querySelector("#mainRepoForm") as HTMLFormElement;
 const countButton = document.getElementById("countButton") as HTMLButtonElement;
 const repoUrl = document.getElementById("repoUrl") as HTMLInputElement;
 const errorContainer = document.getElementById("formError") as HTMLParagraphElement;
@@ -6,11 +6,21 @@ const bodyCopy = document.querySelector(".bodycopy") as HTMLElement;
 const redoButton = document.getElementById("redoButton") as HTMLButtonElement;
 const countPackagesCheckbox = document.getElementById("countPackages");
 const notFound = document.querySelector(".notfound");
+const signupFormBackground = document.querySelector(".dark-background");
+const selectAllCheckBox = document.getElementById("allSelections") as HTMLInputElement;
 
 countPackagesCheckbox.addEventListener("change", () => {
 
 	const storageValue:string = countPackagesCheckbox.checked ? "1" : "0";
 	localStorage.setItem("countPackages", storageValue);
+
+}, false);
+
+signupFormBackground.addEventListener("click", (e:MouseEvent) => {
+
+	if (e.target == signupFormBackground) {
+		signupFormBackground.setAttribute("aria-hidden", "true");
+	}
 
 }, false);
 
@@ -29,7 +39,7 @@ form.addEventListener("submit", (ev:Event) => {
 
 }, false);
 
-window.addEventListener("load", () => {
+window.addEventListener("DOMContentLoaded", () => {
 
 	const countPackagesStorage:string = localStorage.getItem("countPackages");
 
@@ -44,9 +54,10 @@ window.addEventListener("load", () => {
 		repoUrl.value = urlParams.get("repo");
 
 		if (form.checkValidity()) {
-			form.submit();
+			form.requestSubmit();
+			window.history.replaceState({}, document.title, "/");
 		}
-		
+
 	}
 
 }, false);
@@ -101,28 +112,14 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 				languageCheckbox.setAttribute("type", "checkbox");
 				languageCheckbox.setAttribute("checked", "true");
 				languageCheckbox.setAttribute("data-total", language.loc);
-				languageCheckbox.onchange = function() {
-
-					const totalNumberContainer = document.getElementById("numberOfLines");
-
-					const currentNumber:number = parseInt(totalNumberContainer.innerText.replace(/\D/g,''));
-
-					let newNumber:number;
-
-					if (this.checked) {
-						newNumber = currentNumber + parseInt(this.getAttribute("data-total").replace(/\D/g,''));
-					} else {
-						newNumber = currentNumber - parseInt(this.getAttribute("data-total").replace(/\D/g,''));
-					}
-
-					totalNumberContainer.innerText = newNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-				};
+				languageCheckbox.addEventListener("change", () => updateNumber(languageCheckbox), false);
 				languageLabel.insertAdjacentElement("afterbegin", languageCheckbox);
 
 				languageBreakdownContainer.appendChild(languageLabel);
 
 			});
+
+			selectAllCheckBox.addEventListener("change", selectAll, false);
 
 			document.querySelector(".countlines").classList.add("loaded");
 
@@ -133,12 +130,58 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 
 }, false);
 
+function updateNumber(checkbox:HTMLInputElement) {
+
+	const totalNumberContainer = document.getElementById("numberOfLines");
+
+	const currentNumber:number = parseInt(totalNumberContainer.innerText.replace(/\D/g,''));
+
+	let newNumber:number;
+
+	if (checkbox.checked) {
+		newNumber = currentNumber + parseInt(checkbox.getAttribute("data-total").replace(/\D/g,''));
+	} else {
+		newNumber = currentNumber - parseInt(checkbox.getAttribute("data-total").replace(/\D/g,''));
+	}
+
+	if (newNumber < 0) {
+		newNumber = 0;
+	}
+
+	totalNumberContainer.innerText = newNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+}
+
+function selectAll() {
+	const checkboxes:NodeListOf<HTMLInputElement> = document.querySelectorAll("#languageBreakdown input[type=checkbox]");
+
+	// this is to make sure it doesn't double count code if you click them all off, and then click one back on
+	if (this.checked) {
+
+		const checkedCheckboxes:NodeListOf<HTMLInputElement> = document.querySelectorAll("#languageBreakdown input[type=checkbox]:checked");
+		checkedCheckboxes.forEach((box:HTMLInputElement) => {
+			box.checked = false;
+			updateNumber(box);
+		});
+
+	}
+
+	checkboxes.forEach((box:HTMLInputElement) => {
+		box.checked = this.checked;
+		updateNumber(box);
+	});
+	
+}
+
 redoButton.addEventListener("click", () => {
 
 	document.getElementById("repoName").innerText = "";
 	document.getElementById("numberOfLines").innerText = "";
 	document.getElementById("languageBreakdown").innerHTML = "";
 	repoUrl.value = "";
+
+	selectAllCheckBox.removeEventListener("change", selectAll);
+	selectAllCheckBox.checked = true;
 	
 	form.removeAttribute("aria-hidden");
 	bodyCopy.removeAttribute("aria-hidden");
