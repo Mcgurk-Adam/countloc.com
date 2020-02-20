@@ -7,16 +7,6 @@ const redoButton = document.getElementById("redoButton") as HTMLButtonElement;
 const countPackagesCheckbox = document.getElementById("countPackages");
 const notFound = document.querySelector(".notfound");
 
-window.addEventListener("load", () => {
-
-	const countPackagesStorage:string = localStorage.getItem("countPackages");
-
-	if (countPackagesStorage == "1") {
-		countPackagesCheckbox.checked = true;
-	}
-
-}, false);
-
 countPackagesCheckbox.addEventListener("change", () => {
 
 	const storageValue:string = countPackagesCheckbox.checked ? "1" : "0";
@@ -36,6 +26,28 @@ form.addEventListener("submit", (ev:Event) => {
 	countButton.setAttribute("aria-busy", "true");
 
 	GitHub.validateRepo(repoUrl.value);
+
+}, false);
+
+window.addEventListener("load", () => {
+
+	const countPackagesStorage:string = localStorage.getItem("countPackages");
+
+	if (countPackagesStorage == "1") {
+		countPackagesCheckbox.checked = true;
+	}
+
+	const urlParams:URLSearchParams = new URLSearchParams(window.location.search);
+
+	if (urlParams.get("repo") != null) {
+
+		repoUrl.value = urlParams.get("repo");
+
+		if (form.checkValidity()) {
+			form.submit();
+		}
+		
+	}
 
 }, false);
 

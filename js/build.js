@@ -6,12 +6,6 @@ var bodyCopy = document.querySelector(".bodycopy");
 var redoButton = document.getElementById("redoButton");
 var countPackagesCheckbox = document.getElementById("countPackages");
 var notFound = document.querySelector(".notfound");
-window.addEventListener("load", function () {
-    var countPackagesStorage = localStorage.getItem("countPackages");
-    if (countPackagesStorage == "1") {
-        countPackagesCheckbox.checked = true;
-    }
-}, false);
 countPackagesCheckbox.addEventListener("change", function () {
     var storageValue = countPackagesCheckbox.checked ? "1" : "0";
     localStorage.setItem("countPackages", storageValue);
@@ -23,6 +17,19 @@ form.addEventListener("submit", function (ev) {
     ev.preventDefault();
     countButton.setAttribute("aria-busy", "true");
     GitHub.validateRepo(repoUrl.value);
+}, false);
+window.addEventListener("load", function () {
+    var countPackagesStorage = localStorage.getItem("countPackages");
+    if (countPackagesStorage == "1") {
+        countPackagesCheckbox.checked = true;
+    }
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("repo") != null) {
+        repoUrl.value = urlParams.get("repo");
+        if (form.checkValidity()) {
+            form.submit();
+        }
+    }
 }, false);
 window.addEventListener("reponotfound", function () {
     errorContainer.innerText = "That repository cannot be found.";
