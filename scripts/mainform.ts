@@ -153,6 +153,7 @@ function updateNumber(checkbox:HTMLInputElement) {
 }
 
 function selectAll() {
+	
 	const checkboxes:NodeListOf<HTMLInputElement> = document.querySelectorAll("#languageBreakdown input[type=checkbox]");
 
 	// this is to make sure it doesn't double count code if you click them all off, and then click one back on
@@ -170,7 +171,7 @@ function selectAll() {
 		box.checked = this.checked;
 		updateNumber(box);
 	});
-	
+
 }
 
 redoButton.addEventListener("click", () => {
