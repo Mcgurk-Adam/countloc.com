@@ -1,0 +1,57 @@
+.settings {
+
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	width: 100%;
+	padding-top: 50px;
+
+	h1 {
+		font-size: 24px;
+		color: $dark_text;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	form {
+
+		margin-top: 50px;
+		max-width: 600px;
+		width: 95%;
+		display: flex;
+		flex-flow: column nowrap;
+
+		label {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+			color: $dark_text;
+			font-size: 16px;
+			margin-bottom: 20px;
+			font-weight: 600;
+
+			input {
+				max-width: 200px;
+				height: 50px;
+				text-indent: 15px;
+				background-color: #fff;
+				border-radius: $border-radius;
+				font-size: 12px;
+				color: $secondary_text;
+			}
+
+		}
+
+	}
+
+}
+
+@media all and (max-width: 400px) {
+
+	.settings form label input {
+		max-width: 175px;
+	}
+
+}
