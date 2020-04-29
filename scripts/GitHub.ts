@@ -1,3 +1,7 @@
+interface GithubRepository {
+	full_name:string;
+}
+
 class GitHub {
 
 	static validateRepo(rawUrl:string): string {
@@ -30,7 +34,7 @@ class GitHub {
 
 			} else {
 
-				const githubResponse:Object = JSON.parse(ajax.response);
+				const githubResponse:GithubRepository = JSON.parse(ajax.response);
 				const foundEvent:Event = new CustomEvent("repofound", {
 					detail: "https://github.com/" + githubResponse.full_name
 				});

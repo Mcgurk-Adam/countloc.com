@@ -4,8 +4,8 @@ const repoUrl = document.getElementById("repoUrl") as HTMLInputElement;
 const errorContainer = document.getElementById("formError") as HTMLParagraphElement;
 const bodyCopy = document.querySelector(".bodycopy") as HTMLElement;
 const redoButton = document.getElementById("redoButton") as HTMLButtonElement;
-const countPackagesCheckbox = document.getElementById("countPackages");
-const notFound = document.querySelector(".notfound");
+const countPackagesCheckbox = document.getElementById("countPackages") as HTMLInputElement;
+const notFound = document.querySelector(".notfound") as HTMLElement;
 const signupFormBackground = document.querySelector(".dark-background");
 const selectAllCheckBox = document.getElementById("allSelections") as HTMLInputElement;
 
@@ -89,6 +89,7 @@ window.addEventListener("repofound", (ev:CustomEvent) => {
 
 			sessionStorage.setItem("latestCheck", JSON.stringify(jsonReturn.data));
 
+			// @ts-ignore This exists...it's in the head morons
 			gtag('event', 'counted', {
 			    'event_category': 'code',
 			    'event_label': 'Counted Code',
